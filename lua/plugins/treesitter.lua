@@ -20,5 +20,13 @@ return {
         table.remove(opts.ensure_installed, helpIndex)
       end
     end,
+
+    config = function(_, opts)
+      opts.highlight.disable = function()
+        return vim.b.large_buf
+      end
+
+      require("nvim-treesitter.configs").setup(opts)
+    end,
   },
 }

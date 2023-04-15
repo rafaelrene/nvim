@@ -20,6 +20,13 @@ return {
             end,
           })
         end,
+        tsserver = function(_, opts)
+          opts.on_attach = function(server)
+            if vim.b.large_buf then
+              vim.lsp.get_client_by_id(server.id).stop()
+            end
+          end
+        end,
       },
     },
   },
