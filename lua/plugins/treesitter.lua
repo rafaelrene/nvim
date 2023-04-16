@@ -14,6 +14,9 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
+      table.insert(opts.ensure_installed, "css")
+      table.insert(opts.ensure_installed, "scss")
+
       local helpIndex = getIndex("help", opts.ensure_installed)
 
       if helpIndex ~= nil then
