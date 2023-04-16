@@ -11,3 +11,8 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
 vim.opt.colorcolumn = { "80", "100" }
+
+vim.opt.encoding = "utf-8"
+vim.opt.fileencoding = "utf-8"
+vim.opt.fileformat = "unix"
+vim.opt.fileformats = "unix"
