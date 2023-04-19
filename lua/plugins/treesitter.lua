@@ -16,6 +16,7 @@ return {
     opts = function(_, opts)
       table.insert(opts.ensure_installed, "css")
       table.insert(opts.ensure_installed, "scss")
+      table.insert(opts.ensure_installed, "graphql")
 
       local helpIndex = getIndex("help", opts.ensure_installed)
 
