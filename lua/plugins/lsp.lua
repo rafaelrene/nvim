@@ -32,6 +32,8 @@ return {
           opts.on_attach = function(server)
             if vim.b.large_buf then
               vim.lsp.get_client_by_id(server.id).stop()
+            else
+              vim.lsp.get_client_by_id(server.id).setup(opts)
             end
           end
         end,

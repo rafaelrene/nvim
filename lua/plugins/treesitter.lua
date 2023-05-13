@@ -1,36 +1,27 @@
-local function getIndex(value, table)
-  local foundIndex = nil
-
-  for index, tableValue in ipairs(table) do
-    if value == tableValue then
-      foundIndex = index
-    end
-  end
-
-  return foundIndex
-end
-
 return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
+      -- Add required parsers
       table.insert(opts.ensure_installed, "css")
-      table.insert(opts.ensure_installed, "scss")
       table.insert(opts.ensure_installed, "graphql")
+      table.insert(opts.ensure_installed, "html")
+      table.insert(opts.ensure_installed, "jsdoc")
+      table.insert(opts.ensure_installed, "json")
+      table.insert(opts.ensure_installed, "lua")
+      table.insert(opts.ensure_installed, "rust")
+      table.insert(opts.ensure_installed, "scss")
+      table.insert(opts.ensure_installed, "typescript")
 
-      local helpIndex = getIndex("help", opts.ensure_installed)
-
-      if helpIndex ~= nil then
-        table.remove(opts.ensure_installed, helpIndex)
-      end
-    end,
-
-    config = function(_, opts)
+      -- Disable hightlighing on big files
       opts.highlight.disable = function()
         return vim.b.large_buf
       end
 
-      require("nvim-treesitter.configs").setup(opts)
+      return opts
     end,
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-context",
+    },
   },
 }
