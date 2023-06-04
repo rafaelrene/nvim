@@ -1,3 +1,5 @@
+local util = require("lspconfig/util")
+
 return {
   {
     "neovim/nvim-lspconfig",
@@ -9,8 +11,40 @@ return {
             workingDirectory = { mode = "auto" },
           },
         },
+        gopls = {
+          settings = {
+            gopls = {
+              semanticTokens = true,
+              completeUnimported = true,
+              usePlaceholders = true,
+              analyses = {
+                unusedparams = true,
+              },
+            },
+          },
+        },
       },
       setup = {
+        gopls = function()
+          -- workaround for gopls not supporting semantictokensprovider
+          -- https://github.com/golang/go/issues/54531#issuecomment-1464982242
+          require("lazyvim.util").on_attach(function(client, _)
+            if client.name == "gopls" then
+              if not client.server_capabilities.semanticTokensProvider then
+                local semantic = client.config.capabilities.textDocument.semanticTokens
+                client.server_capabilities.semanticTokensProvider = {
+                  full = true,
+                  legend = {
+                    tokenTypes = semantic.tokenTypes,
+                    tokenModifiers = semantic.tokenModifiers,
+                  },
+                  range = true,
+                }
+              end
+            end
+          end)
+          -- end workaround
+        end,
         eslint = function()
           require("lazyvim.util").on_attach(function(client)
             if client.name == "eslint" then
@@ -22,7 +56,7 @@ return {
 
           vim.api.nvim_create_autocmd("BufWritePre", {
             callback = function(event)
-              if require("lspconfig.util").get_active_client_by_name(event.buf, "eslint") then
+              if util.get_active_client_by_name(event.buf, "eslint") then
                 vim.cmd("EslintFixAll")
               end
             end,
