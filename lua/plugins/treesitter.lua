@@ -12,10 +12,10 @@ return {
       table.insert(opts.ensure_installed, "rust")
       table.insert(opts.ensure_installed, "scss")
       table.insert(opts.ensure_installed, "typescript")
-      table.insert(opts.ensure_installed, "go")
-      table.insert(opts.ensure_installed, "gomod")
-      table.insert(opts.ensure_installed, "gowork")
-      table.insert(opts.ensure_installed, "gosum")
+      -- table.insert(opts.ensure_installed, "go")
+      -- table.insert(opts.ensure_installed, "gomod")
+      -- table.insert(opts.ensure_installed, "gowork")
+      -- table.insert(opts.ensure_installed, "gosum")
       -- Disable hightlighing on big files
       opts.highlight.disable = function()
         return vim.b.large_buf
