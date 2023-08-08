@@ -1,7 +1,7 @@
 return {
   {
     "ThePrimeagen/harpoon",
-    opts = function()
+    opts = function(_, opts)
       local mark = require("harpoon.mark")
       local ui = require("harpoon.ui")
 
@@ -35,6 +35,16 @@ return {
       vim.keymap.set("n", "<leader>9", function()
         ui.nav_file(9)
       end, { desc = "Toggle to harpoon mark" })
+
+      if opts.menu == nil then
+        opts.menu = {}
+      end
+
+      opts.menu = vim.tbl_extend("force", opts.menu, {
+        width = vim.api.nvim_win_get_width(0) - 8,
+      })
+
+      return opts
     end,
   },
 }
