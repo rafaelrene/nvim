@@ -20,6 +20,8 @@ vim.keymap.set(
 vim.keymap.set("n", "<leader>fC", [[:let @+ = expand("%:p")<CR>]], { desc = "Copy file path (Absolute)" })
 vim.keymap.set("n", "<leader>fc", [[:let @+ = expand("%:.")<CR>]], { desc = "Copy file path (Relative)" })
 
+vim.keymap.set("n", "<leader>gv", [[:Gvdiffsplit!<CR>]], { desc = "Resolve git conflicts" })
+
 vim.keymap.set("v", "K", ":m '< -2<CR>gv=gv", { desc = "Move selection line up" })
 vim.keymap.set("v", "J", ":m '> +1<CR>gv=gv", { desc = "Move selection line down" })
 
