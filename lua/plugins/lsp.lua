@@ -1,5 +1,14 @@
 local util = require("lspconfig/util")
 
+local function organize_imports()
+  local params = {
+    command = "_typescript.organizeImports",
+    arguments = { vim.api.nvim_buf_get_name(0) },
+  }
+
+  vim.lsp.buf.execute_command(params)
+end
+
 return {
   {
     "neovim/nvim-lspconfig",
@@ -8,8 +17,7 @@ return {
         ---@type lspconfig.options.tsserver
         tsserver = {
           keys = {
-            { "<leader>co", "<cmd>TypescriptOrganizeImports<CR>", desc = "Organize Imports" },
-            { "<leader>cR", "<cmd>TypescriptRenameFile<CR>", desc = "Rename File" },
+            { "<leader>co", organize_imports, desc = "Organize Imports" },
           },
           settings = {
             typescript = {
