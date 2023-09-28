@@ -1,9 +1,18 @@
 return {
   "nvim-telescope/telescope.nvim",
-  dependencies = { "nvim-lua/plenary.nvim" },
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    {
+      "piersolenski/telescope-import.nvim",
+      config = function()
+        require("telescope").load_extension("import")
+      end,
+    },
+  },
   keys = {
     { "<leader>gb", "<cmd> Telescope git_branches <cr>", desc = "branches" },
     { "<leader>sv", "<cmd> Telescope treesitter <cr>", desc = "treesitter symbols" },
+    { "<leader>i", "<cmd> Telescope import <cr>", desc = "Import" },
   },
   opts = function(_, opts)
     opts.defaults.path_display = { shorten = 10 }
@@ -16,6 +25,10 @@ return {
       prompt_position = "top",
       width = 0.99,
     }
+
+    opts.extensions = vim.tbl_deep_extend("error", opts.extensions or {}, {
+      import = { insert_at_top = true },
+    })
 
     return opts
   end,

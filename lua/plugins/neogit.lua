@@ -7,5 +7,5 @@ return {
     "ibhagwan/fzf-lua", -- optional
   },
   config = true,
-  cmd = "Neogit",
+  event = "VeryLazy",
 }

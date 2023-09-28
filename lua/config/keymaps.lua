@@ -2,27 +2,59 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
-vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines" })
+---@param mode string|table
+---@param lhs string
+---@param rhs string|function
+---@param desc string
+local map = function(mode, lhs, rhs, desc)
+  vim.keymap.set(mode, lhs, rhs, { desc = desc })
+end
 
-vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Move buffer page down" })
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Move bugger page up" })
+---@param lhs string
+---@param rhs string|function
+---@param desc string
+local nmap = function(lhs, rhs, desc)
+  map("n", lhs, rhs, desc)
+end
 
-vim.keymap.set("n", "n", "nzzzv", { desc = "Next" })
-vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous" })
+---@param lhs string
+---@param rhs string|function
+---@param desc string
+local vmap = function(lhs, rhs, desc)
+  map("v", lhs, rhs, desc)
+end
 
-vim.keymap.set(
-  "n",
-  "<leader>fs",
-  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-  { desc = "Find and Replace (In Current Buffer)" }
-)
+---@param lhs string
+---@param rhs string|function
+---@param desc string
+local imap = function(lhs, rhs, desc)
+  map("i", lhs, rhs, desc)
+end
 
-vim.keymap.set("n", "<leader>fC", [[:let @+ = expand("%:p")<CR>]], { desc = "Copy file path (Absolute)" })
-vim.keymap.set("n", "<leader>fc", [[:let @+ = expand("%:.")<CR>]], { desc = "Copy file path (Relative)" })
+-- Basic normal mappings
+nmap("J", "mzJ`z", "Join lines")
 
-vim.keymap.set("n", "<leader>gv", [[:Gvdiffsplit!<CR>]], { desc = "Resolve git conflicts" })
+nmap("<C-d>", "<C-d>zz", "Move buffer page down")
+nmap("<C-u>", "<C-u>zz", "Move bugger page up")
 
-vim.keymap.set("v", "K", ":m '< -2<CR>gv=gv", { desc = "Move selection line up" })
-vim.keymap.set("v", "J", ":m '> +1<CR>gv=gv", { desc = "Move selection line down" })
+nmap("n", "nzzzv", "Next")
+nmap("N", "Nzzzv", "Previous")
 
-vim.keymap.set("i", "jk", "<esc>", { desc = "Return to normal mode" })
+nmap("<leader>fs", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "Find and Replace (In Current Buffer)")
+
+nmap("<leader>fC", [[:let @+ = expand("%:p")<CR>]], "Copy file path (Absolute)")
+nmap("<leader>fc", [[:let @+ = expand("%:.")<CR>]], "Copy file path (Relative)")
+
+-- Basic visual mappings
+vmap("K", ":m '< -2<CR>gv=gv", "Move selection line up")
+vmap("J", ":m '> +1<CR>gv=gv", "Move selection line down")
+
+-- Basic insert mappings
+imap("jk", "<ESC>", "Return to normal mode")
+
+-- Plugins
+-- Most of the time keymaps for plugins are lazy-loaded from the plugin file itself.
+
+-- Git
+nmap("<leader>gv", [[:Gvdiffsplit!<CR>]], "Resolve git conflicts")
+nmap("<leader>gg", [[:Neogit<CR>]], "Neogit")
