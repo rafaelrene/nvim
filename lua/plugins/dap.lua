@@ -20,20 +20,15 @@ return {
         if not dap.configurations[language] then
           dap.configurations[language] = {
             {
-              type = "pwa-node",
-              request = "launch",
-              name = "Launch file",
-              program = "${file}",
               cwd = "${workspaceFolder}",
-              runtimeExecutable = "node",
-            },
-            {
-              type = "pwa-node",
-              request = "attach",
               name = "Attach",
+              port = 9220,
               processId = require("dap.utils").pick_process,
-              cwd = "${workspaceFolder}",
+              program = "${file}",
+              request = "attach",
               runtimeExecutable = "node",
+              sourceMaps = true,
+              type = "pwa-chrome",
             },
           }
         end
