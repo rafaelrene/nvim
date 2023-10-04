@@ -8,6 +8,13 @@ return {
         require("telescope").load_extension("import")
       end,
     },
+    {
+      "nvim-telescope/telescope-fzf-native.nvim",
+      build = "make",
+      config = function()
+        require("telescope").load_extension("fzf")
+      end,
+    },
   },
   keys = {
     { "<leader>gb", "<cmd> Telescope git_branches <cr>", desc = "branches" },
@@ -28,6 +35,12 @@ return {
 
     opts.extensions = vim.tbl_deep_extend("error", opts.extensions or {}, {
       import = { insert_at_top = true },
+      fzf = {
+        case_mode = "smart_case",
+        fuzzy = true,
+        override_file_sorter = true,
+        override_generic_sorter = true,
+      },
     })
 
     return opts

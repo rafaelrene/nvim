@@ -1,17 +1,23 @@
 return {
   {
     "mfussenegger/nvim-dap",
-
+    optional = true,
     opts = function()
       local dap = require("dap")
 
       if not dap.adapters["pwa-node"] then
         require("dap").adapters["pwa-node"] = {
           type = "server",
-          host = "127.0.0.1",
+          host = "localhost",
           port = "${port}",
           executable = {
             command = "js-debug-adapter",
+            args = {
+              -- 💀 Make sure to update this path to point to your installation
+              require("mason-registry").get_package("js-debug-adapter"):get_install_path()
+                .. "/js-debug/src/dapDebugServer.js",
+              "${port}",
+            },
           },
         }
       end
@@ -165,6 +171,13 @@ return {
     end,
 
     dependencies = {
+      {
+        "williamboman/mason.nvim",
+        opts = function(_, opts)
+          opts.ensure_installed = opts.ensure_installed or {}
+          table.insert(opts.ensure_installed, "js-debug-adapter")
+        end,
+      },
       -- fancy UI for the debugger
       {
         "rcarriga/nvim-dap-ui",
@@ -191,6 +204,7 @@ return {
           local dapui = require("dapui")
 
           dapui.setup(opts)
+
           dap.listeners.after.event_initialized["dapui_config"] = function()
             dapui.open({})
           end
@@ -201,6 +215,12 @@ return {
             dapui.close({})
           end
         end,
+      },
+
+      -- js debugger
+      {
+        "mxsdev/nvim-dap-vscode-js",
+        build = "npm i --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
       },
 
       -- virtual text for the debugger
