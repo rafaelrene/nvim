@@ -26,8 +26,5 @@ return {
 
       return opts
     end,
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-context",
-    },
   },
 }
