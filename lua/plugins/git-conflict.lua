@@ -1,6 +1,6 @@
 return {
   "akinsho/git-conflict.nvim",
   config = true,
-  event = "User GitConflictDetected",
+  event = "User",
   version = "*",
 }
