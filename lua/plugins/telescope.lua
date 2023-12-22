@@ -25,12 +25,14 @@ return {
     opts.defaults.path_display = { shorten = 10 }
     opts.defaults.layout_strategy = "vertical"
     opts.defaults.layout_config = {
-      height = 0.99,
-      mirror = true,
-      preview_height = 0.7,
-      preview_cutoff = 0,
-      prompt_position = "top",
-      width = 0.99,
+      vertical = {
+        height = 0.99,
+        mirror = true,
+        preview_height = 0.75,
+        preview_cutoff = 0,
+        prompt_position = "top",
+        width = 0.99,
+      },
     }
 
     opts.extensions = vim.tbl_deep_extend("error", opts.extensions or {}, {
