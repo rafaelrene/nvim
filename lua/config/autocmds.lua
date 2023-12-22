@@ -5,28 +5,36 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
-local MAX_FILE_SIZE = 1024 * 10 * 5 -- 50kb
+local large_buffer_augroup = augroup("large_buffer", { clear = true })
+
+local MAX_FILE_SIZE = 1024 * 10 * 100 -- 100kb
 
 autocmd({ "BufReadPre" }, {
   pattern = "*",
-  group = augroup("large_buffer", { clear = true }),
+  group = large_buffer_augroup,
   callback = function()
     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf()))
 
     if ok and stats and (stats.size > MAX_FILE_SIZE) then
-      print("File too large! Disabled unneeded features!")
+      print("File too large! Disabled additional features!")
 
       vim.b.large_buf = true
-
-      vim.opt_local.foldmethod = "manual"
-      vim.opt_local.spell = false
 
       vim.cmd("setlocal noswapfile noundofile nocursorline")
       vim.cmd("syntax off")
       vim.cmd("syntax clear")
+
       vim.cmd("NoMatchParen")
     else
+      print("Re-enabled additional features!")
+
       vim.b.large_buf = false
+
+      vim.cmd("setlocal swapfile undofile cursorline")
+      vim.cmd("syntax on")
+      vim.cmd("syntax clear")
+
+      vim.cmd("DoMatchParen")
     end
   end,
 })
