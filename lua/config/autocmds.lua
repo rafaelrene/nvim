@@ -25,16 +25,16 @@ autocmd({ "BufReadPre" }, {
       vim.cmd("syntax clear")
 
       vim.cmd("NoMatchParen")
-    else
-      print("Re-enabled additional features!")
-
-      vim.b.large_buf = false
-
-      vim.cmd("setlocal swapfile undofile cursorline")
-      vim.cmd("syntax on")
-      vim.cmd("syntax clear")
-
-      vim.cmd("DoMatchParen")
+      -- else
+      --   print("Re-enabled additional features!")
+      --
+      --   vim.b.large_buf = false
+      --
+      --   vim.cmd("setlocal swapfile undofile cursorline")
+      --   vim.cmd("syntax on")
+      --   vim.cmd("syntax clear")
+      --
+      --   vim.cmd("DoMatchParen")
     end
   end,
 })
